@@ -1,0 +1,17 @@
+{
+  "name": "wc",
+  "version": "1.0.0",
+  "description": "My software engineering homework ---develop a program like wc.exe",
+  "main": "index.js",
+  "scripts": {
+    "test": "wc"
+  },
+  "bin": {
+    "wc": "index.js"
+  },
+  "author": "sherlock",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^14.0.0"
+  }
+}

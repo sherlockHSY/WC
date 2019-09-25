@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <title>WC</title>
+    <style>
+        html,body {
+            
+            margin: 0 auto;
+            padding: 0;
+
+        }
+
+        .bigContainer {
+            width: 100%;
+            height: 550px;
+            margin: auto;
+           
+        }
+
+        .container {
+            margin-top: 100px;
+
+        }
+
+        .middleContainer {
+            text-align: center;
+            vertical-align: middle;
+            display: flex;
+            height: 150px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .text {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='bigContainer' >
+        <div class='container'>
+            <h1 style='text-align: center'>My WC</h1>
+            <div class='middleContainer'>
+                <label for="exampleInputFile"
+                    style='width:100%;display: inline-block;text-align: center'>请选择文件/文件夹</label>
+
+                <div style="text-align:center;vertical-align:middle;width:100%;"><input type="file" id="file"
+                        style='margin-left: 9%;display: inline-block'></div>
+                <div style='width:100%;'>
+                    <button type="button" class="btn btn-lg btn-primary" id='myBtn'
+                        disabled="disabled">查看各项统计结果</button>
+                </div>
+
+            </div>
+
+            <div id='showResult' style='text-align: center'>
+            </div>
+            <script>
+                var filename;
+                $('#file').change(function (e) {
+                    filename = e.currentTarget.files[0].name;
+                    $('#myBtn').removeAttr("disabled");
+                })
+                $('#myBtn').click(function (e) {
+                    if($('#showResult').children().length>0) {
+                        //清除之前的dom节点
+                        $('#showResult').empty()
+                    }
+                    $.ajax({
+                        url: '/getInfo?name=' + filename,
+                        type: 'post',
+                        data: {
+                            fileName: filename
+                        },
+                        beforeSend: function (xhr) {
+                            // 在所有发送请求的操作（open, send）之前执行
+                            console.log('beforeSend', xhr)
+                        },
+                        success: function (res) {
+                            // 隐藏 loading
+                            // 只有请求成功（状态码为200）才会执行这个函数
+                            console.log(res);
+                            //渲染数据
+                            var resultArr = res.split('-');
+                            //时间有限，无奈手动写死
+                            var deadArr = ['行数', '单词数', '字符数', '空行数', '代码行数', '注释行数']
+
+                            for (let i = 0; i < resultArr.length; i++) {
+                                var htmlStr = '<div class="text">' + deadArr[i] + '为' + "<span style='color: #EB7347'>    "+  resultArr[i] + "</span>" + '</div>';
+                                $('#showResult').append(htmlStr);
+                            }
+                        },
+                        error: function (xhr) {
+                            // 隐藏 loading
+                            // 只有请求不正常（状态码不为200）才会执行
+                            console.log('error', xhr)
+                        },
+                    })
+                })
+
+            </script>
+        </div>
+
+    </div>
+</body>
+
+</html>
