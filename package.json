@@ -1,17 +1,22 @@
 {
   "name": "wc",
   "version": "1.0.0",
-  "description": "My software engineering homework ---develop a program like wc.exe",
+  "description": "software engineering homework ---wc",
   "main": "index.js",
   "scripts": {
     "test": "wc"
   },
-  "bin": {
-    "wc": "index.js"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sherlockHSY/WC.git"
   },
   "author": "sherlock",
   "license": "ISC",
   "dependencies": {
     "yargs": "^14.0.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/sherlockHSY/WC/issues"
+  },
+  "homepage": "https://github.com/sherlockHSY/WC#readme"
 }

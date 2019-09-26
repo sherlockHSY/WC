@@ -6,7 +6,8 @@
 const fs = require("fs")
 const readline = require('readline')
 const path = require('path')
-const {httpServer} = require('./webView')
+const { httpServer } = require('./webView')
+
 //抽象出读取文件流的方法，逐行读取文件，返回文件intput流
 const readLineHandle = (filePath) => {
     let input = fs.createReadStream(filePath)
@@ -73,10 +74,10 @@ function fileDisplay(argv, filePath, fileType, wildcardCharacter) {
     //根据文件路径读取文件，返回文件列表
     var files;
     try {
-       
+
         files = fs.readdirSync(filePath);
     } catch (error) {
-        
+
         return console.log('请选择一个文件夹');
     }
     //遍历读取到的文件列表
@@ -108,7 +109,7 @@ function fileDisplay(argv, filePath, fileType, wildcardCharacter) {
                 }
                 if (argv.a) {
                     //指令为-a
-                    complexData(fileName,filedir)
+                    complexData(fileName, filedir)
                 }
 
                 //判断是否有通配符，若为? 则结束循环
@@ -134,7 +135,7 @@ function fileDisplay(argv, filePath, fileType, wildcardCharacter) {
                     }
                     if (argv.a) {
                         //指令为-a
-                        complexData(fileName,filedir)
+                        complexData(fileName, filedir)
                     }
 
                     //判断是否有通配符，若为? 则结束循环
@@ -145,10 +146,10 @@ function fileDisplay(argv, filePath, fileType, wildcardCharacter) {
             }
         }
         if (isDir) {
-            if(fileName !== 'node_modules') {//忽略掉node_modules文件夹，没必要
+            if (fileName !== 'node_modules') {//忽略掉node_modules文件夹，没必要
                 fileDisplay(argv, filedir, fileType, wildcardCharacter);//递归，如果是文件夹，就继续遍历该文件夹下面的文件
             }
-            
+
         }
 
         if (breakFlag === true) { break; }
@@ -219,8 +220,8 @@ const complexData = (fileName, filePath) => {
 }
 
 // -x 显示图形界面
-const showWeb = () =>{
-    console.log('发送http请求');
+const showWeb = () => {
+    //调用函数
     httpServer()
 }
 

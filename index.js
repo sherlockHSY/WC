@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// const program = require('commander');
 var argv = require('yargs')
     .boolean(['x'])
     .argv;
@@ -8,7 +7,7 @@ const { linesNum, wordsNum, lettersNum, getFilePath,readDir,complexData,showWeb 
 //获取用户输入的指令
 //支持的指令 -c -w -l -s -a -x
 
-let breakError;
+var breakError;
 const readCommand = (async () => {
     try {
   

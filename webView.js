@@ -3,17 +3,17 @@ var fs = require('fs');
 var URL = require('url');
 const readline = require('readline')
 const path = require('path')
+var cmd = require('child_process');
 
+//（由于js不能获取文件绝对路径，所以只支持查看在项目文件夹下的文件） 
+const httpServer =  () => {
+  
+// 使用默认浏览器打开
+cmd.exec('start http://localhost:8080/');
 
-// async function httpServer()  {
-
-// }
-
-
-const httpServer = (async () => {
   var server = http.createServer();
   server.on('request', function (req, res) {
-    console.log('收到请求，路径是：' + req.url)
+    
     //获取到的url是端口号的后面  /开头的路径
     //Content-Type 告诉对象发送的数据内容是什么类型
     res.setHeader('Content-Type', 'text/plain;charset=utf-8')
@@ -29,7 +29,7 @@ const httpServer = (async () => {
       });
     }
     var parseObj = URL.parse(req.url, true);
-    console.log(parseObj);
+   
     if (parseObj.pathname === '/getInfo') {
       var fileName = parseObj.query.name
       console.log(fileName)
@@ -90,12 +90,10 @@ const httpServer = (async () => {
     //返回到前端的参数，必须是字符串或者二进制，不能是其它类型
   })
   server.listen(8080, function () {
-    console.log('服务器启动成功了')
+    
   })
-})();
-var cmd = require('child_process');
-// 使用默认浏览器打开
-cmd.exec('start http://localhost:8080/');
+};
+
 exports = module.exports = {
   httpServer
 }
